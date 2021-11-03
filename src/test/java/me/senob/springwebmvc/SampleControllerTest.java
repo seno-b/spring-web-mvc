@@ -17,10 +17,9 @@ class SampleControllerTest {
 
     @Test
     public void getEvent() throws Exception {
-        mockMvc.perform(get("/events/1;name=seno"))
+        mockMvc.perform(get("/events?name=seno"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("id").value(1))
                 .andExpect(jsonPath("name").value("seno"))
         ;
     }

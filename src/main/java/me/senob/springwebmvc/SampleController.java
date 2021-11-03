@@ -4,15 +4,16 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @Controller
 public class SampleController {
 
-    @GetMapping("/events/{id}")
+    @GetMapping("/events")
     @ResponseBody
-    public Event getEvents(@PathVariable Integer id, @MatrixVariable String name) {
+    public Event getEvents(@RequestParam Map<String, String> para) {
         Event event = new Event();
-        event.setId(id);
-        event.setName(name);
+        event.setName(para.get("name"));
         return event;
     }
 }
