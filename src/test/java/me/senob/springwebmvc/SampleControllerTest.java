@@ -17,7 +17,16 @@ class SampleControllerTest {
 
     @Test
     public void getEvent() throws Exception {
-        mockMvc.perform(get("/events?name=seno"))
+        mockMvc.perform(get("/events/form"))
+                .andDo(print())
+                .andExpect(view().name("events/form"))
+                .andExpect(model().attributeExists("event"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void postEvent() throws Exception {
+        mockMvc.perform(post("/events?name=seno"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("name").value("seno"))
