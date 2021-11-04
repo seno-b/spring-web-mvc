@@ -1,15 +1,13 @@
 package me.senob.springwebmvc;
 
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class SampleController {
@@ -20,17 +18,27 @@ public class SampleController {
         attributeValue.setName("test");
         attributeValue.setLimit(50);
         model.addAttribute("event", attributeValue);
-        return "events/form";
+        return "/events/form";
     }
 
     @PostMapping("/events")
-    @ResponseBody
-    public Event getEvents(@Valid @ModelAttribute Event event, BindingResult bindingResult) {
-        if ( bindingResult.hasErrors() ){
-            for (ObjectError allError : bindingResult.getAllErrors()) {
-                System.out.println("allError = " + allError);
-            }
+    public String createEvents(@Valid @ModelAttribute Event event, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            return "/events/form";
         }
-        return event;
+        return "redirect:/events/list";
+    }
+
+    @GetMapping("/events/list")
+    public String getEvents(Model model) {
+        Event event = new Event();
+        event.setName("Spring");
+        event.setLimit(10);
+
+        List<Event> eventList = new ArrayList<>();
+        eventList.add(event);
+        model.addAttribute("eventList", eventList);
+
+        return "/events/list";
     }
 }
