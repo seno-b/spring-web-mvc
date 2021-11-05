@@ -8,11 +8,12 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@SessionAttributes(value = {"event"}) // model attribute 에 value 즉 'event' 라는 이름이 존재하면 HttpSession에 등록?저장 된다.
+//@SessionAttributes(value = {"event"}) // model attribute 에 value 즉 'event' 라는 이름이 존재하면 HttpSession에 등록?저장 된다.
 public class SampleController {
 
     @GetMapping("/events/form/name")
@@ -49,7 +50,10 @@ public class SampleController {
     }
 
     @GetMapping("/events/list")
-    public String getEvents(Model model) {
+    public String getEvents(Model model, @SessionAttribute LocalDateTime visitTime) {
+
+        System.out.println("visitTime = " + visitTime);
+
         Event event = new Event();
         event.setName("Spring");
         event.setLimit(10);
