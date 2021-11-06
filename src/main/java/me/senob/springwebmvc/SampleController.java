@@ -5,6 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-//@SessionAttributes(value = {"event"}) // model attribute 에 value 즉 'event' 라는 이름이 존재하면 HttpSession에 등록?저장 된다.
+@SessionAttributes(value = {"event"}) // model attribute 에 value 즉 'event' 라는 이름이 존재하면 HttpSession에 등록?저장 된다.
 public class SampleController {
 
     @GetMapping("/events/form/name")
@@ -41,25 +42,35 @@ public class SampleController {
     }
 
     @PostMapping("/events/form/limit")
-    public String eventsFormLimitSubmit(@Valid @ModelAttribute Event event, BindingResult bindingResult, SessionStatus sessionStatus) {
+    public String eventsFormLimitSubmit(@Valid @ModelAttribute Event event,
+                                        BindingResult bindingResult,
+                                        SessionStatus sessionStatus,
+                                        RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             return "/events/form-limit";
         }
         sessionStatus.setComplete();
+
+        redirectAttributes.addAttribute("name", event.getName());
+        redirectAttributes.addAttribute("limit", event.getLimit());
+
         return "redirect:/events/list";
     }
 
     @GetMapping("/events/list")
-    public String getEvents(Model model, @SessionAttribute LocalDateTime visitTime) {
+    public String getEvents(Model model, @SessionAttribute LocalDateTime visitTime,
+                            @ModelAttribute(value = "newEvent") Event event) {
 
         System.out.println("visitTime = " + visitTime);
 
-        Event event = new Event();
-        event.setName("Spring");
-        event.setLimit(10);
+        Event defaultEvent = new Event();
+        defaultEvent.setName("Spring");
+        defaultEvent.setLimit(10);
 
         List<Event> eventList = new ArrayList<>();
+        eventList.add(defaultEvent);
         eventList.add(event);
+
         model.addAttribute("eventList", eventList);
 
         return "/events/list";
