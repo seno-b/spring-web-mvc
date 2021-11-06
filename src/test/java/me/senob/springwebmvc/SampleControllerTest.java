@@ -8,6 +8,8 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.xml.xpath.XPathExpressionException;
+import java.time.LocalDateTime;
 import java.util.Map;
 
 import static org.hamcrest.Matchers.notNullValue;
@@ -45,5 +47,19 @@ class SampleControllerTest {
         ModelAndView modelAndView = mvcResult.getModelAndView();
         Map<String, Object> model = modelAndView.getModel();
         System.out.println("model = " + model.size());
+    }
+
+    @Test
+    public void getEvents() throws Exception {
+        Event event = new Event();
+        event.setName("Winter is coming.");
+        event.setLimit(1000);
+
+        mockMvc.perform(get("/events/list")
+                .sessionAttr("visitTime", LocalDateTime.now())
+                .flashAttr("newEvent", event))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(xpath("//p").nodeCount(2));
     }
 }
