@@ -47,4 +47,6 @@ public class FileController {
                 .header(HttpHeaders.CONTENT_LENGTH, String.valueOf(file.length()))
                 .body(resource);
     }
+
+    @PostMapping
 }
