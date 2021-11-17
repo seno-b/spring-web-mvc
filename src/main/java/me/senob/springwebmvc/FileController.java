@@ -48,5 +48,4 @@ public class FileController {
                 .body(resource);
     }
 
-    @PostMapping
 }
