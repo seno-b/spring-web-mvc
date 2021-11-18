@@ -18,7 +18,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest
-class SampleControllerTest {
+class EventControllerTest {
 
     @Autowired
     MockMvc mockMvc;

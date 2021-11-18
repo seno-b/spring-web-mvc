@@ -15,7 +15,7 @@ import java.util.List;
 
 @Controller
 @SessionAttributes(value = {"event"}) // model attribute 에 value 즉 'event' 라는 이름이 존재하면 HttpSession에 등록?저장 된다.
-public class SampleController {
+public class EventController {
 
     @GetMapping("/events/form/name")
     public String eventsFormName(Model model) {
