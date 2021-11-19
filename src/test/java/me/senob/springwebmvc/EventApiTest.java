@@ -26,16 +26,16 @@ class EventApiTest {
     public void createEvent() throws Exception{
         Event event = new Event();
         event.setName("seno");
-        event.setLimit(-20);
-
+        event.setLimit(20);
+        
         String json = objectMapper.writeValueAsString(event);
 
         mockMvc.perform(post("/api/events")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json))
                 .andDo(print())
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andExpect(jsonPath("name").value("seno"))
-                .andExpect(jsonPath("limit").value(-20));
+                .andExpect(jsonPath("limit").value(20));
     }
 }

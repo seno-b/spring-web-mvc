@@ -59,6 +59,7 @@ class EventControllerTest {
                 .sessionAttr("visitTime", LocalDateTime.now())
                 .flashAttr("newEvent", event))
                 .andDo(print())
+                .andExpect(model().attributeExists("categories"))
                 .andExpect(status().isOk())
                 .andExpect(xpath("//p").nodeCount(2));
     }

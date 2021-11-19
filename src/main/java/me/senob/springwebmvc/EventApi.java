@@ -1,6 +1,7 @@
 package me.senob.springwebmvc;
 
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -23,6 +24,6 @@ public class EventApi {
             return ResponseEntity.badRequest().build();
         }
 
-        return ResponseEntity.ok(event);
+        return ResponseEntity.status(HttpStatus.CREATED).body(event);
     }
 }

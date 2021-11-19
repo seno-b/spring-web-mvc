@@ -17,6 +17,16 @@ import java.util.List;
 @SessionAttributes(value = {"event"}) // model attribute 에 value 즉 'event' 라는 이름이 존재하면 HttpSession에 등록?저장 된다.
 public class EventController {
 
+//    @ModelAttribute
+//    public void categories(Model model) {
+//        model.addAttribute("categories", List.of("study", "book", "hobby"));
+//    }
+
+    @ModelAttribute("categories")
+    public List<String> categories(){
+        return List.of("study", "book", "hobby");
+    }
+
     @GetMapping("/events/form/name")
     public String eventsFormName(Model model) {
         model.addAttribute("event", new Event());
@@ -57,7 +67,7 @@ public class EventController {
     }
 
     @GetMapping("/events/list")
-    public String getEvents(Model model, @SessionAttribute LocalDateTime visitTime) {
+    public String getEvents(Model model, @ModelAttribute("newEvent") Event newEvent, @SessionAttribute LocalDateTime visitTime) {
 
         System.out.println("visitTime = " + visitTime);
 
@@ -65,7 +75,7 @@ public class EventController {
         defaultEvent.setName("Spring");
         defaultEvent.setLimit(10);
 
-        Event newEvent = (Event) model.getAttribute("newEvent");
+//        Event newEvent = (Event) model.getAttribute("newEvent");
 
         List<Event> eventList = new ArrayList<>();
         eventList.add(defaultEvent);
