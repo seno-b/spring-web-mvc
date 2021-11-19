@@ -23,23 +23,6 @@ public class EventController {
 //        model.addAttribute("categories", List.of("study", "book", "hobby"));
 //    }
 
-    @ExceptionHandler
-    public String eventExceptionHandler(EventException exception, Model model) {
-        model.addAttribute("message", exception.getMessage());
-        return "error";
-    }
-
-    @InitBinder
-    public void InitEventBinder(WebDataBinder webDataBinder) {
-        webDataBinder.setDisallowedFields("id");
-        webDataBinder.addValidators(new EventValidator());
-    }
-
-    @ModelAttribute("categories")
-    public List<String> categories(){
-        return List.of("study", "book", "hobby");
-    }
-
     @GetMapping("/events/form/name")
     public String eventsFormName(Model model) {
         throw new EventException("dkdkdkdkdkd");
