@@ -6,16 +6,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/api/events")
 public class EventApi {
+
+//    @ExceptionHandler
+//    public ResponseEntity eventExceptionHandler() {
+//        return ResponseEntity.badRequest().body("something... error ...");
+//    }
 
     @PostMapping
     public ResponseEntity<Event> createEvent(@Valid @RequestBody Event event, BindingResult bindingResult) {
